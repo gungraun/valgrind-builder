@@ -1,5 +1,5 @@
 #!/bin/sh -ex
-# spell-checker: ignore autogen ncpus destdir lbzip libc
+# spell-checker: ignore autogen ncpus destdir lbzip libc cflags flto
 
 VALGRIND_VERSION="${1:-3.26.0}"
 BUILD_DIR="$(pwd)/build"
