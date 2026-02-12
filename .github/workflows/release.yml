@@ -1,9 +1,13 @@
 # spell-checker: ignore androideabi taiki binutils riscv dtolnay pipefail armv gungraun destdir
+# spell-checker: ignore realpath
 name: Release
 
 on:
   push:
     tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -49,8 +53,10 @@ jobs:
       - uses: actions/checkout@v6
       - name: Prepare
         run: |
-          build_output="build/root"
-          archive_dir="build/archive"
+          mkdir -p build/root build/archive
+
+          build_output="$(realpath build/root)"
+          archive_dir="$(realpath build/archive)"
           archive_name="valgrind-${{ needs.release.outputs.version }}-${{ matrix.os }}-${{ matrix.valgrind }}.tar.gz"
           archive_sum="${archive_name}.sha256"
 
@@ -84,9 +90,9 @@ jobs:
           archive_name="${{ env.ARCHIVE_NAME }}"
           archive_sum="${{ env.ARCHIVE_SUM }}"
 
+          cd build/valgrind-"{{ matrix.valgrind }}"
           make -j"$(nproc)" install DESTDIR="${build_output}"
 
-          mkdir -p "${archive_dir}"
           cd "${archive_dir}"
           tar czf "${archive_name}" -C "${build_output}" usr/
           sha256sum "$archive_name" > "$archive_sum"
