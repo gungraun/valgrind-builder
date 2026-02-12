@@ -36,6 +36,8 @@ jobs:
       - name: Build valgrind
         run: ./build_valgrind.sh ${{ matrix.valgrind }}
       - name: Install valgrind
-        run: make -j"$(nproc)" install
+        run: |
+          cd build/valgrind-"${{ matrix.valgrind }}"
+          sudo make -j"$(nproc)" install
       - name: Run and test valgrind
         run: /usr/bin/valgrind --tool=cachegrind ls -la
