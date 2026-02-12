@@ -90,7 +90,7 @@ jobs:
           archive_name="${{ env.ARCHIVE_NAME }}"
           archive_sum="${{ env.ARCHIVE_SUM }}"
 
-          cd build/valgrind-"{{ matrix.valgrind }}"
+          cd build/valgrind-"${{ matrix.valgrind }}"
           make -j"$(nproc)" install DESTDIR="${build_output}"
 
           cd "${archive_dir}"
