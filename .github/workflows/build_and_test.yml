@@ -1,5 +1,5 @@
 # spell-checker: ignore androideabi taiki binutils riscv dtolnay pipefail armv gungraun destdir
-# spell-checker: ignore cachegrind
+# spell-checker: ignore cachegrind memcheck
 name: Build and test
 
 on:
@@ -40,4 +40,6 @@ jobs:
           cd build/valgrind-"${{ matrix.valgrind }}"
           sudo make -j"$(nproc)" install
       - name: Run and test valgrind
-        run: /usr/bin/valgrind --tool=cachegrind ls -la
+        run: |
+          /usr/bin/valgrind --tool=cachegrind ls -la
+          /usr/bin/valgrind --tool=memcheck ls -la
