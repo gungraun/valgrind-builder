@@ -31,7 +31,7 @@ jobs:
     outputs:
       version: ${{ env.VERSION }}
 
-  build:
+  build_linux:
     name: Build artifacts
     needs: ["release"]
     strategy:
@@ -41,11 +41,6 @@ jobs:
           - ubuntu-24.04
           - ubuntu-22.04
         valgrind:
-          - "3.16.0"
-          - "3.16.1"
-          - "3.17.0"
-          - "3.18.0"
-          - "3.18.1"
           - "3.19.0"
           - "3.20.0"
           - "3.21.0"
@@ -108,5 +103,97 @@ jobs:
         if: env.CHECK == 'success'
         run: gh release upload "${{ needs.release.outputs.version }}" "${{ env.ARCHIVE_NAME }}" "${{ env.ARCHIVE_SUM }}"
         working-directory: "${{ env.ARCHIVE_DIR }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build_freebsd:
+    name: Build artifacts
+    needs: ["release"]
+    strategy:
+      fail-fast: false
+      matrix:
+        freebsd:
+          - "14.0"
+          - "14.1"
+          - "14.2"
+          - "14.3"
+          - "15.0"
+        valgrind:
+          - "3.23.0"
+          - "3.24.0"
+          - "3.25.0"
+          - "3.25.1"
+          - "3.26.0"
+        exclude:
+          - freebsd: "15.0"
+            valgrind: "3.23.0"
+          - freebsd: "15.0"
+            valgrind: "3.24.0"
+          - freebsd: "15.0"
+            valgrind: "3.25.0"
+          - freebsd: "15.0"
+            valgrind: "3.25.1"
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Prepare
+        run: |
+          archive_name="valgrind-${{ needs.release.outputs.version }}-freebsd-${{ matrix.freebsd }}-${{ matrix.valgrind }}.tar.gz"
+          archive_sum="${archive_name}.sha256"
+
+          echo "ARCHIVE_NAME=${archive_name}" >> $GITHUB_ENV
+          echo "ARCHIVE_SUM=${archive_sum}" >> $GITHUB_ENV
+      - name: Check if archive already exists
+        run: |
+          set -o pipefail
+
+          if gh release view ${{ needs.release.outputs.version }} --json assets | jq -e --arg name "${{ env.ARCHIVE_NAME }}" '.assets[] | select(.name == $name)'; then
+            echo "Check: archive '${{ env.ARCHIVE_NAME }}' already exists for this version '${{ needs.release.outputs.version }}'"
+            echo "CHECK=failure" >> $GITHUB_ENV
+          else
+            echo "CHECK=success" >> $GITHUB_ENV
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: cross-platform-actions/action@v0.32.0
+        if: env.CHECK == 'success'
+        env:
+          ARCHIVE_NAME: ${{ env.ARCHIVE_NAME }}
+          ARCHIVE_SUM: ${{ env.ARCHIVE_SUM }}
+        with:
+          environment_variables: ARCHIVE_NAME ARCHIVE_SUM
+          operating_system: freebsd
+          architecture: x86-64
+          version: ${{ matrix.freebsd }}
+          shell: bash
+          memory: 8G
+          cpu_count: 4
+          sync_files: "true"
+          run: |
+            set -eux
+
+            # Install prerequisites
+            sudo pkg install -y wget autoconf automake gcc git bzip2 gmake
+
+            ./build_valgrind.sh "${{ matrix.valgrind }}" "freebsd"
+
+            mkdir -p 'archive' 'build/root'
+            build_output="$(realpath build/root)"
+            archive_dir="$(realpath archive)"
+
+            cd build/valgrind-"${{ matrix.valgrind }}"
+            gmake -j"$(nproc)" install DESTDIR="${build_output}"
+
+            cd "${archive_dir}"
+            tar czf "${ARCHIVE_NAME}" -C "${build_output}" usr/
+            sha256sum "$ARCHIVE_NAME" > "$ARCHIVE_SUM"
+
+            # To speed up the file sync back
+            rm -rf "build/"
+      - name: Upload archive
+        if: env.CHECK == 'success'
+        run: gh release upload "${{ needs.release.outputs.version }}" "${{ env.ARCHIVE_NAME }}" "${{ env.ARCHIVE_SUM }}"
+        working-directory: archive
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

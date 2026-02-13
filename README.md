@@ -10,6 +10,8 @@ Download the tarball and unpack it in the root directory.
 For example to install the latest valgrind-builder release with valgrind 3.26.0
 on a ubuntu-24.04 runner in a github workflow
 
+TODO: Add sha256 check?
+
 ```yaml
 - name: Download and install valgrind
   run:
