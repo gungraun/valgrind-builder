@@ -5,17 +5,20 @@ fast.
 
 ## Installation
 
-Download the tarball and unpack it in the root directory. For example to install
-ehe latest valgrind 3.26.0 on a ubuntu-24.04 runner in a github workflow
+Download the tarball and unpack it in the root directory.
+
+For example to install the latest valgrind-builder release with valgrind 3.26.0
+on a ubuntu-24.04 runner in a github workflow
 
 ```yaml
 - name: Download and install valgrind
   run:
-    wget TODO
-    sudo tar xzf TODO -C /
+    wget https://github.com/gungraun/valgrind-builder/releases/download/v0.1.0/valgrind-v0.1.0-ubuntu-24.04-3.26.0.tar.gz
+    sudo tar xzf valgrind-v0.1.0-ubuntu-24.04-3.26.0.tar.gz -C /
 ```
 
-## Build details
+## Build and tarball details
 
-* No documentation in the tarball
-* Built with lto to speed up valgrind execution by 10%
+* No documentation included to minimize the installation
+* Valgrind is built with link time optimizations to possibly speed up valgrind
+  execution by around 10%
