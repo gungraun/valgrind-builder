@@ -5,16 +5,17 @@ VALGRIND_VERSION="${1:-3.26.0}"
 OS="${2:-linux}"
 BUILD_DIR="$(pwd)/build"
 
+configure_args="--enable-tls"
 case "$OS" in
 linux)
   ncpus=$(nproc)
   make="make"
-  configure_args="--prefix=/usr --enable-lto"
+  configure_args="${configure_args} --prefix=/usr"
   ;;
 freebsd)
   ncpus=$(sysctl -n hw.ncpu)
   make="gmake"
-  configure_args="--prefix=/usr/local --enable-only64bit"
+  configure_args="${configure_args} --prefix=/usr/local --enable-only64bit"
   ;;
 *)
   echo "Unknown OS: ${OS}"
