@@ -11,10 +11,20 @@ Security in case of vulnerabilities.
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [3.27.0-1] - 2026-04-21
+
+The valgrind-builder version number beginning with this release follows the
+version number of valgrind with a suffix indicating the valgrind-builder build.
+
+### Changed
+
+- Updated valgrind-builder build to include new valgrind release `3.27.0`
+- There is now a maximum of 5 major/minor valgrind builds for each
+  valgrind-builder release
 
 ## [0.1.1] - 2026-03-02
 
