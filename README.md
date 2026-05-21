@@ -19,14 +19,14 @@ Installation: Download the tarball of a valgrind-builder release and extract it
 in the root directory. Do not install somewhere else. Valgrind doesn't like it
 to be installed in other places than the `--prefix` directory.
 
-For example to install the valgrind-builder release (here `v3.27.0-1`) for
-Valgrind `3.27.0` on a `ubuntu-24.04` runner in a github workflow
+For example to install the valgrind-builder release (here `v3.27.1-1`) for
+Valgrind `3.27.1` on a `ubuntu-24.04` runner in a github workflow
 
 ```yaml
 - name: Download and install Valgrind
   run: |
-      wget https://github.com/gungraun/valgrind-builder/releases/download/v3.27.0-1/valgrind-3.27.0-x86_64-ubuntu-24.04.tar.gz
-      sudo tar xzf valgrind-3.27.0-x86_64-ubuntu-24.04.tar.gz -C /
+      wget https://github.com/gungraun/valgrind-builder/releases/download/v3.27.1-1/valgrind-3.27.1-x86_64-ubuntu-24.04.tar.gz
+      sudo tar xzf valgrind-3.27.1-x86_64-ubuntu-24.04.tar.gz -C /
       sudo apt-get update && sudo apt-get install --assume-yes --no-install-recommends libc6-dbg
 ```
 
@@ -48,14 +48,14 @@ Other build details:
 
 Build table:
 
-| OS      | OS version | available Valgrind versions                                  | install prefix | features         |
-| ------- | ---------- | ------------------------------------------------------------ | -------------- | ---------------- |
-| Ubuntu  | 22.04      | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br> | /usr           | lto, tls         |
-| Ubuntu  | 24.04      | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br> | /usr           | lto, tls         |
-| FreeBSD | 14.0       | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br> | /usr/local     | tls, 64-bit only |
-| FreeBSD | 14.1       | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br> | /usr/local     | tls, 64-bit only |
-| FreeBSD | 14.2       | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br> | /usr/local     | tls, 64-bit only |
-| FreeBSD | 14.3       | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br> | /usr/local     | tls, 64-bit only |
-| FreeBSD | 15.0       | 3.26.0<br>3.27.0                                             | /usr/local     | tls, 64-bit only |
+| OS      | OS version | available Valgrind versions                                            | install prefix | features         |
+| ------- | ---------- | ---------------------------------------------------------------------- | -------------- | ---------------- |
+| Ubuntu  | 22.04      | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br>3.27.1<br> | /usr           | lto, tls         |
+| Ubuntu  | 24.04      | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br>3.27.1<br> | /usr           | lto, tls         |
+| FreeBSD | 14.0       | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br>3.27.1<br> | /usr/local     | tls, 64-bit only |
+| FreeBSD | 14.1       | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br>3.27.1<br> | /usr/local     | tls, 64-bit only |
+| FreeBSD | 14.2       | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br>3.27.1<br> | /usr/local     | tls, 64-bit only |
+| FreeBSD | 14.3       | 3.23.0<br>3.24.0<br>3.25.0<br>3.25.1<br>3.26.0<br>3.27.0<br>3.27.1<br> | /usr/local     | tls, 64-bit only |
+| FreeBSD | 15.0       | 3.26.0<br>3.27.0<br>3.27.1                                             | /usr/local     | tls, 64-bit only |
 
 [setup-gungraun]: https://github.com/gungraun/setup-gungraun

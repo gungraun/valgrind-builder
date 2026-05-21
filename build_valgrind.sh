@@ -1,7 +1,7 @@
 #!/bin/sh -eux
 # spell-checker: ignore autogen ncpu ncpus destdir lbzip libc cflags flto
 
-VALGRIND_VERSION="${1:-3.27.0}"
+VALGRIND_VERSION="${1:-3.27.1}"
 OS="${2:-linux}"
 BUILD_DIR="$(pwd)/build"
 
