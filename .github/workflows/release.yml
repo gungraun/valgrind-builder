@@ -168,7 +168,7 @@ jobs:
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: cross-platform-actions/action@v1.0.0
+      - uses: cross-platform-actions/action@v1.5.0
         if: env.CHECK == 'success'
         env:
           ARCHIVE_NAME: ${{ env.ARCHIVE_NAME }}
