@@ -35,7 +35,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install prerequisites
         run: ./prepare.sh
       - name: Build valgrind
@@ -80,7 +80,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: cross-platform-actions/action@v1.0.0
         with:
           operating_system: freebsd
