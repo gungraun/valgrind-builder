@@ -15,6 +15,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [3.28.0-1] - 2026-11-24
+
+### Added
+
+- Add valgrind builds for `ubuntu-26.04`
+
+### Changed
+
+- Bump valgrind version 3.27.1 -> 3.28.0
+
+### Removed
+
+- Remove valgrind `3.23.0` builds (5 major/minor versions maximum)
+
 ## [3.27.1-1] - 2026-05-21
 
 ### Changed
